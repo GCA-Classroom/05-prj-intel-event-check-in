@@ -245,7 +245,6 @@ button .fas {
   border-radius: 8px;
   color: #333;
   margin-bottom: 15px;
-  display: none;
 }
 
 .success-message {
@@ -341,6 +340,59 @@ select {
   font-weight: 500;
   color: #475569;
 }
+
+#greeting { 
+  opacity: 0; 
+  transition: opacity .5s ease; 
+}
+#greeting.show {
+   opacity: 1; 
+  }
+
+.attendee-box{
+  margin:20px auto;
+  max-width:700px; width:90%;
+  background:#fff; border-radius:16px;
+  box-shadow:0 5px 24px rgba(0,60,116,0.07);
+  padding:20px;
+}
+.attendee-box__header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px;
+}
+.attendee-list{ 
+  margin-top:8px; padding-left:18px; text-align:left; color:#475569;
+  max-height:240px; overflow:auto;
+}
+.attendee-list li{ margin:6px 0; }
+.btn-clear{
+  background:#eef2f7; color:#334155; border:none; border-radius:10px;
+  padding:8px 12px; cursor:pointer; font-weight:600;
+}
+.btn-clear:hover{ background:#e2e8f0; }
+
+
+  /* Celebration banner */
+#celebration {
+  display: none;
+  margin: 16px 0;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #fff3cd;
+  color: #7a5b00;
+  font-weight: 600;
+  text-align: center;
+}
+#celebration.show { display: block; }
+
+/* Attendee list */
+#attendeeList {
+  margin-top: 14px;
+  padding-left: 18px;
+  text-align: left;
+  color: #475569;
+}
+#attendeeList li { margin: 6px 0; }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
