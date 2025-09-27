@@ -4,15 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intel Sustainability Summit Check-In</title>
-    <!-- Add Font Awesome CSS -->
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Hero section with Intel branding -->
+    <!-- Hero -->
     <div class="hero">
       <div class="hero-content">
         <img src="img/intel-logo.svg" alt="Intel Logo" class="intel-logo" />
@@ -24,22 +25,38 @@
         </p>
       </div>
     </div>
+
+    <!-- Toolbar (theme/sound, shortcuts hint) -->
+    <div class="toolbar">
+      <button id="themeToggle" class="pill-btn" aria-pressed="false" title="Toggle dark mode">
+        <i class="fa-solid fa-moon"></i> Theme
+      </button>
+      <button id="soundToggle" class="pill-btn" aria-pressed="false" title="Toggle chime &amp; voice">
+        <i class="fa-solid fa-volume-high"></i> Sound
+      </button>
+      <span class="hint">Shortcuts: 1/2/3 pick team · Ctrl+Z undo</span>
+    </div>
+
     <!-- Attendance tracking -->
     <div class="attendance-tracker">
       <div class="attendance-header">
         <i class="fas fa-users"></i>
-        Attendance: <span id="attendeeCount">0</span>/50
+        Attendance: <span id="attendeeCount">0</span><span id="maxSlash"> /</span><span id="maxGoal">50</span>
       </div>
       <div class="progress-container">
         <div id="progressBar" class="progress-bar"></div>
       </div>
     </div>
+
     <div class="container">
+      <!-- Celebration banner -->
+      <div id="celebrationBanner" class="celebration hidden" role="status" aria-live="polite"></div>
+
       <!-- Feedback message -->
-      <p id="greeting"></p>
+      <p id="greeting" class="success-message" role="status" aria-live="polite"></p>
 
       <!-- Check-in form -->
-      <form class="check-in" id="checkInForm">
+      <form class="check-in" id="checkInForm" autocomplete="off">
         <label for="attendeeName" class="form-label">Attendee Check-In</label>
         <div class="form-group">
           <div class="input-wrapper">
@@ -49,37 +66,77 @@
               name="attendeeName"
               placeholder="Enter name..."
               required
+              aria-required="true"
+              aria-describedby="keysHelp"
             />
-            <select id="teamSelect" name="team" required>
+            <select id="teamSelect" name="team" required aria-required="true">
               <option value="" disabled selected>Select Team...</option>
               <option value="water">Team Water Wise</option>
               <option value="zero">Team Net Zero</option>
               <option value="power">Team Renewables</option>
             </select>
           </div>
-          <button type="submit" id="checkInBtn">
+          <button type="submit" id="checkInBtn" aria-label="Check in attendee">
             <i class="fas fa-user-check"></i> Check In
           </button>
         </div>
+        <div id="keysHelp" class="tiny help">Press 1/2/3 to select team · Enter to check in</div>
+        <div class="tiny-row">
+          <label for="goalInput" class="tiny">Goal</label>
+          <input id="goalInput" class="tiny-input" type="number" min="1" max="500" value="50" />
+          <button type="button" id="applyGoalBtn" class="tiny-btn" aria-label="Apply goal">Apply</button>
+          <button type="button" id="undoBtn" class="tiny-btn" aria-label="Undo last check-in">
+            <i class="fa-solid fa-rotate-left"></i> Undo
+          </button>
+          <button type="button" id="resetBtn" class="tiny-btn danger" aria-label="Reset all data">
+            Reset
+          </button>
+        </div>
       </form>
+
+      <!-- Leaderboard donut -->
+      <section class="leaderboard">
+        <h3>Live Leaderboard</h3>
+        <div class="donut-wrap">
+          <div id="donut" class="donut" role="img" aria-label="Team share chart"></div>
+          <div class="legend">
+            <div><span class="dot water"></span> Water <strong id="waterPct">0%</strong></div>
+            <div><span class="dot zero"></span> Net Zero <strong id="zeroPct">0%</strong></div>
+            <div><span class="dot power"></span> Renewables <strong id="powerPct">0%</strong></div>
+          </div>
+        </div>
+      </section>
 
       <!-- Team stats -->
       <div class="team-stats">
         <h3>Team Attendance</h3>
         <div class="teams-grid">
-          <div class="team-card water">
+          <div class="team-card water tilt" data-team="water" id="card-water">
             <span class="team-name">🌊 Team Water Wise</span>
             <span class="team-count" id="waterCount">0</span>
           </div>
-          <div class="team-card zero">
+          <div class="team-card zero tilt" data-team="zero" id="card-zero">
             <span class="team-name">🌿 Team Net Zero</span>
             <span class="team-count" id="zeroCount">0</span>
           </div>
-          <div class="team-card power">
+          <div class="team-card power tilt" data-team="power" id="card-power">
             <span class="team-name">⚡ Team Renewables</span>
             <span class="team-count" id="powerCount">0</span>
           </div>
         </div>
+      </div>
+
+      <!-- Attendee List -->
+      <div class="attendee-list">
+        <div class="list-head">
+          <h3>Attendees</h3>
+          <div class="list-actions">
+            <button id="exportBtn" class="tiny-btn" type="button" aria-label="Export attendee CSV">
+              <i class="fa-solid fa-file-arrow-down"></i> Export CSV
+            </button>
+          </div>
+        </div>
+        <ul id="attendeeList" class="list"></ul>
       </div>
     </div>
 
@@ -91,6 +148,9 @@
         >Sustainability Goals</a
       >
     </footer>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
   </body>
