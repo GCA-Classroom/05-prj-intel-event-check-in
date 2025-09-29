@@ -8,7 +8,7 @@
 // - Toast notifications and micro-interactions
 
 (function () {
-  // DOM
+  // DOM 
   const attendeeCountEl = document.getElementById("attendeeCount");
   const maxGoalEl = document.getElementById("maxGoal");
   const progressBarEl = document.getElementById("progressBar");
