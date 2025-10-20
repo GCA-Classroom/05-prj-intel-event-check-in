@@ -236,7 +236,20 @@ button .fas {
   border-radius: 10px;
   transition: width 0.6s ease;
 }
+.progress-container {
+  background-color: #e0e0e0;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
 
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #0071c5; /* Intel blue */
+  transition: width 0.3s ease-in-out;
+}
 /* Adjust spacing between components */
 .container {
   margin-top: 0;

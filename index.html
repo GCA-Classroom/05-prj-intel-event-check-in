@@ -28,15 +28,15 @@
     <div class="attendance-tracker">
       <div class="attendance-header">
         <i class="fas fa-users"></i>
-        Attendance: <span id="attendeeCount">0</span>/50
+        Attendance: <span id="attendeeCount">0</span>/100
       </div>
       <div class="progress-container">
-        <div id="progressBar" class="progress-bar"></div>
+        <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
       </div>
     </div>
     <div class="container">
       <!-- Feedback message -->
-      <p id="greeting"></p>
+      <p id="greeting"></p> 
 
       <!-- Check-in form -->
       <form class="check-in" id="checkInForm">
