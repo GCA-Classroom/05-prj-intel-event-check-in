@@ -1,3 +1,52 @@
+/* Attendee list styles */
+.attendee-list-container {
+  margin: 32px auto 0 auto;
+  padding: 24px 0 0 0;
+  border-top: none;
+  text-align: center;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 60, 116, 0.10);
+  border: 1px solid #f1f5f9;
+}
+.attendee-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.attendee-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 16px;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.attendee-list li:last-child {
+  border-bottom: none;
+}
+.attendee-team {
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.attendee-team.water {
+  background: #e8f7fc;
+  color: #0071c5;
+}
+.attendee-team.zero {
+  background: #ecfdf3;
+  color: #15803d;
+}
+.attendee-team.power {
+  background: #fff7ed;
+  color: #b45309;
+}
 /* Modern reset */
 * {
   margin: 0;
@@ -25,7 +74,8 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
       rgba(0, 153, 219, 0.9) 0%,
       rgba(0, 104, 181, 0.9) 50%,
