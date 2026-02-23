@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,6 +34,19 @@
         <div id="progressBar" class="progress-bar"></div>
       </div>
     </div>
+    <!-- Celebration message -->
+    <div
+      id="celebrationMessage"
+      class="celebration-message"
+      style="display: none"
+    >
+      <div class="celebration-content">
+        <i class="fas fa-trophy"></i>
+        <h2>Goal Reached!</h2>
+        <p id="winningTeamMessage"></p>
+      </div>
+    </div>
+
     <div class="container">
       <!-- Feedback message -->
       <p id="greeting"></p>
@@ -80,6 +93,12 @@
             <span class="team-count" id="powerCount">0</span>
           </div>
         </div>
+      </div>
+
+      <!-- Attendee List -->
+      <div class="attendee-list-section">
+        <h3>Check-in Attendees</h3>
+        <ul id="checkInList" class="attendee-list"></ul>
       </div>
     </div>
 
