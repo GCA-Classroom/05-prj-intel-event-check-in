@@ -25,7 +25,8 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
       rgba(0, 153, 219, 0.9) 0%,
       rgba(0, 104, 181, 0.9) 50%,
@@ -99,8 +100,48 @@ body {
 
 .form-group {
   display: flex;
+  flex-direction: column;
   gap: 15px;
   width: 100%;
+}
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#checkInBtn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.clear-btn {
+  background: none;
+  color: #0071c5;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  min-width: auto;
+  height: auto;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  text-decoration: underline;
+  margin-top: 8px;
+}
+
+.clear-btn:hover {
+  background-color: transparent;
+  transform: none;
+  box-shadow: none;
+  color: #005a9e;
 }
 
 /* Form elements */
@@ -150,6 +191,30 @@ button:hover {
 #checkInBtn {
   flex-shrink: 0;
   white-space: nowrap;
+}
+
+/* Clear button styling */
+.clear-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 0;
+  margin-top: 10px;
+  box-shadow: none;
+  min-width: auto;
+  height: auto;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: none;
+  color: #64748b;
+  transform: none;
+  box-shadow: none;
+  text-decoration: underline;
 }
 
 /* Icon spacing */
@@ -248,7 +313,6 @@ button .fas {
   font-size: 18px;
   padding: 16px 20px;
   border-radius: 8px;
-  color: #333;
   margin-bottom: 15px;
   display: none;
 }
@@ -328,7 +392,49 @@ select {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
+}
+
+.team-dropdown {
+  margin-top: 6px;
+  text-align: left;
+}
+
+.team-dropdown summary {
+  cursor: pointer;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 600;
+  list-style: none;
+}
+
+.team-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.team-dropdown summary::before {
+  content: "▸ ";
+}
+
+.team-dropdown[open] summary::before {
+  content: "▾ ";
+}
+
+.team-list {
+  list-style: none;
+  margin-top: 8px;
+  padding-left: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.team-list li {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #0f172a;
 }
 
 /* Team card colors */
@@ -342,10 +448,74 @@ select {
   background-color: #fff7ed;
 }
 
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .team-name {
   font-size: 15px;
   font-weight: 500;
   color: #475569;
+}
+
+.team-count {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0071c5;
+}
+
+.toggle-attendees {
+  background-color: rgba(0, 113, 197, 0.1);
+  color: #0071c5;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  min-width: auto;
+  height: auto;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toggle-attendees:hover {
+  background-color: rgba(0, 113, 197, 0.2);
+  transform: none;
+}
+
+.toggle-attendees i {
+  font-size: 12px;
+  margin-right: 0;
+}
+
+.attendee-list {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.attendee-list li {
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #475569;
+  border-left: 3px solid #0071c5;
+}
+
+.attendee-list li:last-child {
+  margin-bottom: 0;
 }
 
 /* Mobile responsive */
@@ -376,6 +546,20 @@ select {
 
   .input-wrapper {
     flex-direction: column;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #checkInBtn {
+    width: 100%;
+  }
+
+  .clear-btn {
+    flex: none;
+    min-width: auto;
   }
 
   .teams-grid {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -57,10 +57,18 @@
               <option value="power">Team Renewables</option>
             </select>
           </div>
-          <button type="submit" id="checkInBtn">
-            <i class="fas fa-user-check"></i> Check In
-          </button>
+          <div class="form-buttons">
+            <button type="submit" id="checkInBtn">
+              <i class="fas fa-user-check"></i> Check In
+            </button>
+            <button type="button" id="clearBtn" class="clear-btn">
+              <i class="fas fa-trash"></i> Clear
+            </button>
+          </div>
         </div>
+        <button type="button" id="clearListBtn" class="clear-btn">
+          Clear List
+        </button>
       </form>
 
       <!-- Team stats -->
@@ -68,16 +76,56 @@
         <h3>Team Attendance</h3>
         <div class="teams-grid">
           <div class="team-card water">
+            <div class="team-header">
+              <span class="team-name">🌊 Team Water Wise</span>
+              <span class="team-count" id="waterCount">0</span>
+            </div>
+            <button class="toggle-attendees" onclick="toggleAttendees('water')">
+              <i class="fas fa-chevron-down"></i> View Attendees
+            </button>
+            <ul class="attendee-list" id="waterList"></ul>
+          </div>
+          <div class="team-card zero">
+            <div class="team-header">
+              <span class="team-name">🌿 Team Net Zero</span>
+              <span class="team-count" id="zeroCount">0</span>
+            </div>
+            <button class="toggle-attendees" onclick="toggleAttendees('zero')">
+              <i class="fas fa-chevron-down"></i> View Attendees
+            </button>
+            <ul class="attendee-list" id="zeroList"></ul>
+          </div>
+          <div class="team-card power">
+            <div class="team-header">
+              <span class="team-name">⚡ Team Renewables</span>
+              <span class="team-count" id="powerCount">0</span>
+            </div>
+            <button class="toggle-attendees" onclick="toggleAttendees('power')">
+              <i class="fas fa-chevron-down"></i> View Attendees
+            </button>
+            <ul class="attendee-list" id="powerList"></ul>
             <span class="team-name">🌊 Team Water Wise</span>
             <span class="team-count" id="waterCount">0</span>
+            <details class="team-dropdown" id="waterDropdown">
+              <summary>View names</summary>
+              <ul class="team-list" id="waterList"></ul>
+            </details>
           </div>
           <div class="team-card zero">
             <span class="team-name">🌿 Team Net Zero</span>
             <span class="team-count" id="zeroCount">0</span>
+            <details class="team-dropdown" id="zeroDropdown">
+              <summary>View names</summary>
+              <ul class="team-list" id="zeroList"></ul>
+            </details>
           </div>
           <div class="team-card power">
             <span class="team-name">⚡ Team Renewables</span>
             <span class="team-count" id="powerCount">0</span>
+            <details class="team-dropdown" id="powerDropdown">
+              <summary>View names</summary>
+              <ul class="team-list" id="powerList"></ul>
+            </details>
           </div>
         </div>
       </div>
@@ -95,3 +143,9 @@
     <script src="script.js"></script>
   </body>
 </html>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
