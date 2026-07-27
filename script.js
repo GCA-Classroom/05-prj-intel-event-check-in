@@ -173,10 +173,28 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var i = 0; i < recent.length; i++) {
       var a = recent[i];
       var li = document.createElement('li');
-      li.className = 'attendee-item';
-      var time = '';
-      try { time = new Date(a.time).toLocaleTimeString(); } catch (e) { time = ''; }
-      li.textContent = `${a.name} — ${teamDisplayName(a.team)} ${time ? '(' + time + ')' : ''}`;
+      li.className = `attendee-item ${a.team}`;
+      
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'attendee-name';
+      nameSpan.textContent = a.name;
+      
+      var teamSpan = document.createElement('span');
+      teamSpan.className = 'attendee-team';
+      teamSpan.textContent = `${teamDisplayName(a.team)}`;
+      
+      var timeSpan = document.createElement('span');
+      timeSpan.className = 'attendee-time';
+      try {
+        var time = new Date(a.time).toLocaleTimeString();
+        timeSpan.textContent = time;
+      } catch (e) {
+        timeSpan.textContent = '';
+      }
+      
+      li.appendChild(nameSpan);
+      li.appendChild(teamSpan);
+      li.appendChild(timeSpan);
       attendeeList.appendChild(li);
     }
   }
