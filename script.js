@@ -181,11 +181,22 @@ document.addEventListener('DOMContentLoaded', function() {
       goalReached = true;
       var winner = getWinningTeam();
       if (greetingEl) {
+        var celebrationDiv = document.createElement('div');
+        celebrationDiv.innerHTML = '🎉 Goal Reached! 🎉';
+        
+        var teamDiv = document.createElement('span');
+        teamDiv.className = 'celebration-team';
         if (winner.teams.length === 1) {
-          greetingEl.textContent = `🎉 Goal reached! Winning team: ${winner.teams[0]} (${winner.count} check-ins).`;
+          teamDiv.textContent = winner.teams[0];
         } else {
-          greetingEl.textContent = `🎉 Goal reached! It's a tie between ${winner.teams.join(' & ')} (${winner.count} each).`;
+          teamDiv.textContent = winner.teams.join(' & ');
         }
+        
+        greetingEl.innerHTML = '';
+        greetingEl.appendChild(celebrationDiv);
+        greetingEl.appendChild(teamDiv);
+        greetingEl.appendChild(document.createElement('div'));
+        greetingEl.lastChild.textContent = `${winner.count} check-ins`;
         greetingEl.classList.add('celebration');
       }
       // Launch confetti celebration
