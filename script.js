@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const teamSelect = document.getElementById('teamSelect');
   const attendeeCountEl = document.getElementById('attendeeCount');
   const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
   const greetingEl = document.getElementById('greeting');
   const attendeeList = document.getElementById('attendeeList');
   const waterCountEl = document.getElementById('waterCount');
@@ -82,11 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const pct = Math.min(100, Math.round((total / max) * 100));
     if (progressBar) {
       progressBar.style.width = pct + '%';
-      // show numeric progress inside the bar (e.g., "12/50")
-      progressBar.textContent = `${total}/${max}`;
       progressBar.setAttribute('aria-valuenow', total);
       progressBar.setAttribute('aria-valuemin', 0);
       progressBar.setAttribute('aria-valuemax', max);
+    }
+    if (progressText) {
+      progressText.textContent = `${total}/${max}`;
     }
 
     const water = attendees.filter(function(a) { return a.team === 'water'; }).length;
