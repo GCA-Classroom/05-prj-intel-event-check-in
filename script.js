@@ -75,6 +75,20 @@ document.addEventListener('DOMContentLoaded', function() {
     return { teams: winners, count: maxCount };
   }
 
+  function getRandomWelcomeMessage(name, team) {
+    var messages = [
+      `Welcome, ${name}! 🎉 Thanks for joining ${teamDisplayName(team)}.`,
+      `Great to see you, ${name}! ✨ ${teamDisplayName(team)} is excited to have you.`,
+      `${name} is here! 👋 Welcome to ${teamDisplayName(team)}.`,
+      `Excellent! ${name} has checked in with ${teamDisplayName(team)}. 🌟`,
+      `${name}, so glad you made it! ${teamDisplayName(team)} is ready to go! 💪`,
+      `Welcome aboard, ${name}! ${teamDisplayName(team)} is stronger with you here. 🚀`,
+      `Awesome! ${name} just joined ${teamDisplayName(team)}. Let's do this! ⚡`
+    ];
+    var index = Math.floor(Math.random() * messages.length);
+    return messages[index];
+  }
+
   function updateCounts() {
     const total = attendees.length;
     attendeeCountEl.textContent = total;
@@ -154,8 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCounts();
     renderAttendeeList();
 
-    // Personalized welcome message
-    greetingEl.textContent = `Welcome, ${name}! Thanks for checking in with ${teamDisplayName(team)}.`;
+    // Personalized welcome message with variety
+    greetingEl.textContent = getRandomWelcomeMessage(name, team);
 
     // Reset form for next user
     nameInput.value = '';
