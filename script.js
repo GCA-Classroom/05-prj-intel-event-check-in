@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const powerCountEl = document.getElementById('powerCount');
 
   let attendees = [];
+  let goalReached = false;
 
   function loadAttendees() {
     try {
@@ -36,6 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
     return team;
   }
 
+  function getWinningTeam() {
+    var counts = {
+      water: attendees.filter(function(a) { return a.team === 'water'; }).length,
+      zero: attendees.filter(function(a) { return a.team === 'zero'; }).length,
+      power: attendees.filter(function(a) { return a.team === 'power'; }).length
+    };
+    var maxCount = Math.max(counts.water, counts.zero, counts.power);
+    var winners = [];
+    if (counts.water === maxCount) winners.push(teamDisplayName('water'));
+    if (counts.zero === maxCount) winners.push(teamDisplayName('zero'));
+    if (counts.power === maxCount) winners.push(teamDisplayName('power'));
+    return { teams: winners, count: maxCount };
+  }
+
   function updateCounts() {
     const total = attendees.length;
     attendeeCountEl.textContent = total;
@@ -44,6 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const pct = Math.min(100, Math.round((total / max) * 100));
     if (progressBar) {
       progressBar.style.width = pct + '%';
+      // show numeric progress inside the bar (e.g., "12/50")
+      progressBar.textContent = `${total}/${max}`;
+      progressBar.setAttribute('aria-valuenow', total);
+      progressBar.setAttribute('aria-valuemin', 0);
+      progressBar.setAttribute('aria-valuemax', max);
     }
 
     const water = attendees.filter(function(a) { return a.team === 'water'; }).length;
@@ -53,6 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (waterCountEl) waterCountEl.textContent = water;
     if (zeroCountEl) zeroCountEl.textContent = zero;
     if (powerCountEl) powerCountEl.textContent = power;
+
+    // celebration when goal reached (only once)
+    if (total >= max && !goalReached) {
+      goalReached = true;
+      var winner = getWinningTeam();
+      if (greetingEl) {
+        if (winner.teams.length === 1) {
+          greetingEl.textContent = `🎉 Goal reached! Winning team: ${winner.teams[0]} (${winner.count} check-ins).`;
+        } else {
+          greetingEl.textContent = `🎉 Goal reached! It's a tie between ${winner.teams.join(' & ')} (${winner.count} each).`;
+        }
+        greetingEl.classList.add('celebration');
+      }
+    }
   }
 
   function renderAttendeeList() {
