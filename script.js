@@ -16,14 +16,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function loadAttendees() {
     try {
+      // Try to load from server API first (persistent file storage)
+      fetch('/api/attendees')
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          attendees = Array.isArray(data) ? data : [];
+          updateUiAfterLoad();
+        })
+        .catch(function(err) {
+          // Fallback to localStorage if server not available
+          console.log('Server not available, using localStorage');
+          loadFromLocalStorage();
+          updateUiAfterLoad();
+        });
+    } catch (err) {
+      loadFromLocalStorage();
+      updateUiAfterLoad();
+    }
+  }
+
+  function loadFromLocalStorage() {
+    try {
       const raw = localStorage.getItem('attendees');
       attendees = raw ? JSON.parse(raw) : [];
-      // restore persisted counts if present and set goal state
       try {
         var countsRaw = localStorage.getItem('attendanceCounts');
         if (countsRaw) {
           var counts = JSON.parse(countsRaw);
-          // if counts.total is at or above goal, mark goalReached so celebration is preserved after refresh
           var max = 50;
           if (counts.total >= max) {
             goalReached = true;
@@ -35,6 +54,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (err) {
       attendees = [];
     }
+  }
+
+  function updateUiAfterLoad() {
+    // restore goal state from attendee count
+    var max = 50;
+    if (attendees.length >= max) {
+      goalReached = true;
+    }
+    updateCounts();
+    renderAttendeeList();
   }
 
   function saveAttendees() {
@@ -49,6 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
         power: attendees.filter(function(a) { return a.team === 'power'; }).length
       };
       localStorage.setItem('attendanceCounts', JSON.stringify(counts));
+      
+      // Save to server (persistent file storage)
+      fetch('/api/attendees', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(attendees)
+      }).catch(function(err) {
+        console.log('Could not save to server, data saved in browser only');
+      });
     } catch (err) {
       console.error('Failed to save attendees or counts', err);
     }
@@ -145,8 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize UI from storage
   loadAttendees();
-  updateCounts();
-  renderAttendeeList();
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
