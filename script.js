@@ -127,6 +127,31 @@ document.addEventListener('DOMContentLoaded', function() {
     return messages[index];
   }
 
+  function launchConfetti() {
+    var container = document.getElementById('confetti-container');
+    if (!container) return;
+
+    var colors = ['#0071c5', '#00c7fd', '#22c55e', '#f97316', '#ec4899'];
+    var confettiCount = 50;
+
+    for (var i = 0; i < confettiCount; i++) {
+      var confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+      confetti.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+      confetti.style.width = (5 + Math.random() * 10) + 'px';
+      confetti.style.height = confetti.style.width;
+      container.appendChild(confetti);
+    }
+
+    // Clean up confetti after animation
+    setTimeout(function() {
+      container.innerHTML = '';
+    }, 5000);
+  }
+
   function updateCounts() {
     const total = attendees.length;
     attendeeCountEl.textContent = total;
@@ -163,6 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         greetingEl.classList.add('celebration');
       }
+      // Launch confetti celebration
+      launchConfetti();
     }
   }
 
