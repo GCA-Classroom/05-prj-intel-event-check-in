@@ -17,6 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
     try {
       const raw = localStorage.getItem('attendees');
       attendees = raw ? JSON.parse(raw) : [];
+      // restore persisted counts if present and set goal state
+      try {
+        var countsRaw = localStorage.getItem('attendanceCounts');
+        if (countsRaw) {
+          var counts = JSON.parse(countsRaw);
+          // if counts.total is at or above goal, mark goalReached so celebration is preserved after refresh
+          var max = 50;
+          if (counts.total >= max) {
+            goalReached = true;
+          }
+        }
+      } catch (e) {
+        // ignore malformed counts
+      }
     } catch (err) {
       attendees = [];
     }
@@ -25,8 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveAttendees() {
     try {
       localStorage.setItem('attendees', JSON.stringify(attendees));
+      // also persist derived counts for quick restore
+      var total = attendees.length;
+      var counts = {
+        total: total,
+        water: attendees.filter(function(a) { return a.team === 'water'; }).length,
+        zero: attendees.filter(function(a) { return a.team === 'zero'; }).length,
+        power: attendees.filter(function(a) { return a.team === 'power'; }).length
+      };
+      localStorage.setItem('attendanceCounts', JSON.stringify(counts));
     } catch (err) {
-      console.error('Failed to save attendees', err);
+      console.error('Failed to save attendees or counts', err);
     }
   }
 
