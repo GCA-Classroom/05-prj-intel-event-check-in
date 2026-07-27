@@ -263,14 +263,22 @@ button .fas {
   font-size: 18px;
   padding: 16px 20px;
   border-radius: 8px;
-  color: #333;
+  color: #0071c5;
   margin-bottom: 15px;
-  display: none;
+  background-color: #e8f4fc;
+  display: block;
+  min-height: 1.5em;
 }
 
 .success-message {
   background-color: #e8f4fc;
-  color: #003c71;
+  color: #0071c5;
+}
+
+.celebration {
+  background-color: #fff7ed !important;
+  color: #d97706 !important;
+  font-weight: 700;
 }
 
 /* Counter */
