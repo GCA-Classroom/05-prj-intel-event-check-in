@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,25 +18,42 @@
         <img src="img/intel-logo.svg" alt="Intel Logo" class="intel-logo" />
         <h1>Team Sustainability Summit</h1>
         <div class="hero-divider"></div>
-        <p>
-          <i class="fas fa-leaf"></i> Check-in system for sustainability event
-          attendees
-        </p>
+        <p><i class="fas fa-leaf"></i> Company-wide Sustainability Summit</p>
       </div>
     </div>
     <!-- Attendance tracking -->
-    <div class="attendance-tracker">
+    <div class="attendance-tracker" aria-label="Summit attendance">
       <div class="attendance-header">
         <i class="fas fa-users"></i>
-        Attendance: <span id="attendeeCount">0</span>/50
+        Attendance: <span id="attendeeCount">0</span>/<span id="attendeeGoal"
+          >50</span
+        >
       </div>
-      <div class="progress-container">
+      <div
+        class="progress-container"
+        role="progressbar"
+        aria-label="Attendee check-ins"
+        aria-valuemin="0"
+        aria-valuemax="50"
+        aria-valuenow="0"
+        id="attendanceProgress"
+      >
         <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div
+        id="goalCelebration"
+        class="goal-celebration"
+        role="status"
+        aria-live="polite"
+        hidden
+      >
+        <i class="fas fa-trophy" aria-hidden="true"></i>
+        <span id="goalCelebrationText"></span>
       </div>
     </div>
     <div class="container">
       <!-- Feedback message -->
-      <p id="greeting"></p>
+      <p id="greeting" role="status" aria-live="polite"></p>
 
       <!-- Check-in form -->
       <form class="check-in" id="checkInForm">
@@ -47,7 +64,9 @@
               type="text"
               id="attendeeName"
               name="attendeeName"
-              placeholder="Enter name..."
+              placeholder="Employee full name"
+              autocomplete="name"
+              maxlength="80"
               required
             />
             <select id="teamSelect" name="team" required>
@@ -65,26 +84,55 @@
 
       <!-- Team stats -->
       <div class="team-stats">
-        <h3>Team Attendance</h3>
+        <h3>Team turnout</h3>
         <div class="teams-grid">
-          <div class="team-card water">
-            <span class="team-name">🌊 Team Water Wise</span>
+          <div class="team-card water" id="waterTeamCard">
+            <span class="team-name">
+              <span class="team-emoji" id="waterTeamEmoji" aria-hidden="true"
+                >🌊</span
+              >
+              Team Water Wise
+            </span>
             <span class="team-count" id="waterCount">0</span>
           </div>
-          <div class="team-card zero">
-            <span class="team-name">🌿 Team Net Zero</span>
+          <div class="team-card zero" id="zeroTeamCard">
+            <span class="team-name">
+              <span class="team-emoji" id="zeroTeamEmoji" aria-hidden="true"
+                >🌿</span
+              >
+              Team Net Zero
+            </span>
             <span class="team-count" id="zeroCount">0</span>
           </div>
-          <div class="team-card power">
-            <span class="team-name">⚡ Team Renewables</span>
+          <div class="team-card power" id="powerTeamCard">
+            <span class="team-name">
+              <span class="team-emoji" id="powerTeamEmoji" aria-hidden="true"
+                >⚡</span
+              >
+              Team Renewables
+            </span>
             <span class="team-count" id="powerCount">0</span>
           </div>
         </div>
       </div>
+
+      <section class="attendee-section" aria-labelledby="attendeeHeading">
+        <div class="attendee-heading">
+          <div>
+            <p class="section-kicker">SUMMIT PASSPORT</p>
+            <h2 id="attendeeHeading">Checked-in attendees</h2>
+          </div>
+          <button type="button" id="clearAttendeesBtn" class="clear-button">
+            <i class="fas fa-trash-can" aria-hidden="true"></i> Clear roster
+          </button>
+        </div>
+        <ul id="attendeeList" class="attendee-list" aria-live="polite"></ul>
+        <p id="emptyRoster" class="empty-roster">No one has checked in yet.</p>
+      </section>
     </div>
 
     <footer class="footer">
-      &copy; 2025 Intel •
+      &copy; 2025 Intel |
       <a
         href="https://www.intel.com/content/www/us/en/corporate-responsibility/2030-goals.html"
         class="footer-link"

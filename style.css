@@ -25,7 +25,8 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
       rgba(0, 153, 219, 0.9) 0%,
       rgba(0, 104, 181, 0.9) 50%,
@@ -228,6 +229,20 @@ button .fas {
   position: relative;
 }
 
+.progress-container::after {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(10% - 1px),
+    rgba(255, 255, 255, 0.72) calc(10% - 1px),
+    rgba(255, 255, 255, 0.72) 10%
+  );
+  content: "";
+  pointer-events: none;
+}
+
 .progress-bar {
   width: 0%;
   height: 100%;
@@ -235,6 +250,50 @@ button .fas {
   background-image: linear-gradient(90deg, #0071c5, #00aeef);
   border-radius: 10px;
   transition: width 0.6s ease;
+}
+
+.goal-celebration {
+  display: flex;
+  max-width: 500px;
+  align-items: center;
+  gap: 12px;
+  margin: 16px auto 0;
+  padding: 14px 18px;
+  border: 1px solid #9bd4b2;
+  border-radius: 8px;
+  background: #eaf7ef;
+  color: #17633c;
+  font-weight: 600;
+  text-align: left;
+  animation: celebration-arrive 350ms ease-out;
+}
+
+.goal-celebration[hidden] {
+  display: none;
+}
+
+.goal-celebration i {
+  flex: 0 0 auto;
+  color: #16804b;
+  font-size: 20px;
+}
+
+@keyframes celebration-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal-celebration,
+  .team-emoji-pop {
+    animation: none;
+  }
 }
 
 /* Adjust spacing between components */
@@ -256,6 +315,11 @@ button .fas {
 .success-message {
   background-color: #e8f4fc;
   color: #003c71;
+}
+
+.error-message {
+  background-color: #fff0e8;
+  color: #9c3f1a;
 }
 
 /* Counter */
@@ -324,11 +388,43 @@ select {
 }
 
 .team-card {
+  position: relative;
   padding: 15px;
+  border: 2px solid transparent;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.team-card::before {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  left: 14px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  content: "";
+}
+
+.team-card.water::before {
+  background-color: #1687a7;
+}
+
+.team-card.zero::before {
+  background-color: #348254;
+}
+
+.team-card.power::before {
+  background-color: #d18128;
+}
+
+.team-card.winning-team {
+  border-color: #16804b;
+  box-shadow: 0 0 0 3px rgba(22, 128, 75, 0.14);
 }
 
 /* Team card colors */
@@ -343,9 +439,184 @@ select {
 }
 
 .team-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 15px;
   font-weight: 500;
   color: #475569;
+}
+
+.team-emoji {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+.team-emoji-pop {
+  animation: team-join-pop 600ms cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+@keyframes team-join-pop {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  38% {
+    transform: scale(1.45) rotate(-12deg);
+  }
+  70% {
+    transform: scale(1.2) rotate(9deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.team-count {
+  color: #123b52;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.attendee-section {
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 2px solid #f1f5f9;
+  text-align: left;
+}
+
+.attendee-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.section-kicker {
+  margin-bottom: 4px;
+  color: #0071c5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.attendee-heading h2 {
+  color: #123b52;
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.clear-button,
+.remove-button {
+  min-width: 0;
+  box-shadow: none;
+}
+
+.clear-button {
+  height: 40px;
+  padding: 0 12px;
+  background: transparent;
+  color: #586c78;
+  font-size: 13px;
+}
+
+.clear-button:hover {
+  background: #f3f6f7;
+  color: #9c3f1a;
+  box-shadow: none;
+}
+
+.clear-button .fas {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.attendee-list {
+  list-style: none;
+}
+
+.attendee-item {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 34px;
+  min-height: 62px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-top: 1px solid #e7edf0;
+}
+
+.check-in-stamp {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px dashed #4b9a70;
+  border-radius: 50%;
+  background: #f1f8f2;
+  color: #24754a;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transform: rotate(-8deg);
+}
+
+.attendee-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.attendee-name {
+  overflow-wrap: anywhere;
+  color: #253d49;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.attendee-team {
+  font-size: 12px;
+}
+
+.attendee-team.water {
+  color: #087ea4;
+}
+
+.attendee-team.zero {
+  color: #25804d;
+}
+
+.attendee-team.power {
+  color: #a65b12;
+}
+
+.remove-button {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  padding: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #647782;
+}
+
+.remove-button:hover {
+  background: #fff0e8;
+  color: #9c3f1a;
+  box-shadow: none;
+  transform: none;
+}
+
+.empty-roster {
+  padding: 20px 4px;
+  border-top: 1px solid #e7edf0;
+  color: #71818a;
+  font-size: 14px;
+}
+
+.empty-roster[hidden] {
+  display: none;
 }
 
 /* Mobile responsive */
@@ -357,8 +628,17 @@ select {
     font-size: 38px;
   }
   .container {
-    padding: 32px;
+    width: calc(100% - 30px);
+    padding: 22px 18px;
     margin: 0 15px 30px;
+  }
+
+  .check-in {
+    padding: 22px 16px;
+  }
+
+  .attendance-tracker {
+    margin-bottom: 28px;
   }
 
   .form-group {
@@ -380,5 +660,9 @@ select {
 
   .teams-grid {
     grid-template-columns: 1fr;
+  }
+
+  .attendee-heading {
+    align-items: flex-start;
   }
 }
