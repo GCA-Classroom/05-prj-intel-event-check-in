@@ -25,7 +25,8 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       135deg,
       rgba(0, 153, 219, 0.9) 0%,
       rgba(0, 104, 181, 0.9) 50%,
@@ -346,6 +347,48 @@ select {
   font-size: 15px;
   font-weight: 500;
   color: #475569;
+}
+
+/* Attendee list */
+.attendee-list {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 2px solid #f1f5f9;
+}
+
+.attendee-list h3 {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+#attendeeNames {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+#attendeeNames li {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 15px;
+}
+
+#attendeeNames li:last-child {
+  border-bottom: 0;
+}
+
+.celebration-message {
+  display: none;
+  margin: 20px 0 0;
+  padding: 14px 18px;
+  border-radius: 8px;
+  background-color: #fff7ed;
+  color: #9a3412;
+  font-weight: 700;
+  text-align: center;
 }
 
 /* Mobile responsive */
