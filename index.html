@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intel Sustainability Summit Check-In</title>
-    <!-- Add Font Awesome CSS -->
+    <meta name="theme-color" content="#082b40" />
+    <title>Team Sustainability Summit | Check-In</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -12,84 +12,195 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Hero section with Intel branding -->
-    <div class="hero">
+    <header class="hero">
+      <div class="hero-topline">
+        <img src="img/intel-logo.svg" alt="Intel" class="intel-logo" />
+        <span class="event-status"><span></span> EVENT DESK</span>
+      </div>
       <div class="hero-content">
-        <img src="img/intel-logo.svg" alt="Intel Logo" class="intel-logo" />
-        <h1>Team Sustainability Summit</h1>
-        <div class="hero-divider"></div>
-        <p>
-          <i class="fas fa-leaf"></i> Check-in system for sustainability event
-          attendees
+        <p class="eyebrow">SUSTAINABILITY SUMMIT &nbsp;·&nbsp; 2025</p>
+        <h1>Good ideas start<br />with showing up.</h1>
+        <p class="hero-description">
+          Welcome to the Team Sustainability Summit.
         </p>
       </div>
-    </div>
-    <!-- Attendance tracking -->
-    <div class="attendance-tracker">
-      <div class="attendance-header">
-        <i class="fas fa-users"></i>
-        Attendance: <span id="attendeeCount">0</span>/50
-      </div>
-      <div class="progress-container">
-        <div id="progressBar" class="progress-bar"></div>
-      </div>
-    </div>
-    <div class="container">
-      <!-- Feedback message -->
-      <p id="greeting"></p>
+      <p class="hero-location">
+        <i class="fas fa-location-dot"></i> Main conference hall
+      </p>
+    </header>
 
-      <!-- Check-in form -->
-      <form class="check-in" id="checkInForm">
-        <label for="attendeeName" class="form-label">Attendee Check-In</label>
-        <div class="form-group">
-          <div class="input-wrapper">
+    <main class="page-shell">
+      <section class="overview" aria-label="Event attendance overview">
+        <div class="overview-heading">
+          <div>
+            <p class="section-kicker">LIVE EVENT PULSE</p>
+            <h2>Welcome desk</h2>
+          </div>
+          <p class="capacity-label">
+            <span id="attendeeCount">0</span> <span>/ 50 checked in</span>
+          </p>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="Event capacity"
+          aria-valuemin="0"
+          aria-valuemax="50"
+          aria-valuenow="0"
+        >
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div
+          id="celebrationMessage"
+          class="celebration-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        >
+          <i class="fas fa-trophy" aria-hidden="true"></i>
+          <span id="celebrationText"></span>
+        </div>
+        <div class="overview-metrics">
+          <div class="metric">
+            <span class="metric-label">Checked in</span>
+            <strong id="overviewCheckedIn">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Participating</span>
+            <strong id="overviewParticipating">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Teams represented</span>
+            <strong id="overviewTeams">0 <span>of 3</span></strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="work-area">
+        <section class="check-in-panel" aria-labelledby="checkInHeading">
+          <p class="section-kicker">ARRIVING NOW</p>
+          <h2 id="checkInHeading">Check in an attendee</h2>
+          <p class="section-description">
+            Add them to the room and welcome them to their team.
+          </p>
+
+          <form id="checkInForm">
+            <div class="field-group">
+              <label for="attendeeName">Attendee name</label>
+              <input
+                type="text"
+                id="attendeeName"
+                name="attendeeName"
+                placeholder="e.g. Jordan Lee"
+                autocomplete="name"
+                maxlength="60"
+                required
+              />
+            </div>
+            <div class="field-group">
+              <label for="teamSelect">Sustainability team</label>
+              <select id="teamSelect" name="team" required>
+                <option value="" disabled selected>Choose a team</option>
+                <option value="water">Team Water Wise</option>
+                <option value="zero">Team Net Zero</option>
+                <option value="power">Team Renewables</option>
+              </select>
+            </div>
+            <button type="submit" id="checkInBtn">
+              <i class="fas fa-user-check" aria-hidden="true"></i>
+              <span>Check in attendee</span>
+            </button>
+          </form>
+          <p
+            id="greeting"
+            class="feedback"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </section>
+
+        <section class="teams-panel" aria-labelledby="teamsHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">TURNOUT BY TEAM</p>
+              <h2 id="teamsHeading">Team attendance</h2>
+            </div>
+            <i class="fas fa-chart-simple panel-icon" aria-hidden="true"></i>
+          </div>
+          <div class="team-list">
+            <div class="team-row water">
+              <span class="team-mark" aria-hidden="true">W</span>
+              <span class="team-name">Water Wise</span>
+              <span class="team-count" id="waterCount">0</span>
+              <span class="team-unit">people</span>
+            </div>
+            <div class="team-row zero">
+              <span class="team-mark" aria-hidden="true">N</span>
+              <span class="team-name">Net Zero</span>
+              <span class="team-count" id="zeroCount">0</span>
+              <span class="team-unit">people</span>
+            </div>
+            <div class="team-row power">
+              <span class="team-mark" aria-hidden="true">R</span>
+              <span class="team-name">Renewables</span>
+              <span class="team-count" id="powerCount">0</span>
+              <span class="team-unit">people</span>
+            </div>
+          </div>
+          <p class="team-note">Counts update as each attendee checks in.</p>
+        </section>
+      </div>
+
+      <section class="roster-section" aria-labelledby="rosterHeading">
+        <div class="roster-heading">
+          <div>
+            <p class="section-kicker">THE ROOM, RIGHT NOW</p>
+            <h2 id="rosterHeading">
+              Attendee roster <span id="rosterCount">0</span>
+            </h2>
+          </div>
+          <label class="search-box" for="rosterSearch">
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
             <input
-              type="text"
-              id="attendeeName"
-              name="attendeeName"
-              placeholder="Enter name..."
-              required
+              type="search"
+              id="rosterSearch"
+              placeholder="Find an attendee"
             />
-            <select id="teamSelect" name="team" required>
-              <option value="" disabled selected>Select Team...</option>
-              <option value="water">Team Water Wise</option>
-              <option value="zero">Team Net Zero</option>
-              <option value="power">Team Renewables</option>
-            </select>
-          </div>
-          <button type="submit" id="checkInBtn">
-            <i class="fas fa-user-check"></i> Check In
-          </button>
+          </label>
         </div>
-      </form>
-
-      <!-- Team stats -->
-      <div class="team-stats">
-        <h3>Team Attendance</h3>
-        <div class="teams-grid">
-          <div class="team-card water">
-            <span class="team-name">🌊 Team Water Wise</span>
-            <span class="team-count" id="waterCount">0</span>
+        <div class="roster-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Attendee</th>
+                <th scope="col">Team</th>
+                <th scope="col">Participation</th>
+              </tr>
+            </thead>
+            <tbody id="rosterBody"></tbody>
+          </table>
+          <div id="emptyState" class="empty-state">
+            <span class="empty-icon"
+              ><i class="fas fa-door-open" aria-hidden="true"></i
+            ></span>
+            <p>No attendees yet</p>
+            <span>Check in your first guest to get started.</span>
           </div>
-          <div class="team-card zero">
-            <span class="team-name">🌿 Team Net Zero</span>
-            <span class="team-count" id="zeroCount">0</span>
-          </div>
-          <div class="team-card power">
-            <span class="team-name">⚡ Team Renewables</span>
-            <span class="team-count" id="powerCount">0</span>
-          </div>
+          <p id="noResults" class="no-results" hidden>
+            No attendees match that search.
+          </p>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
 
     <footer class="footer">
-      &copy; 2025 Intel •
+      <span>INTEL &nbsp;·&nbsp; TEAM SUSTAINABILITY SUMMIT</span>
       <a
         href="https://www.intel.com/content/www/us/en/corporate-responsibility/2030-goals.html"
         class="footer-link"
-        >Sustainability Goals</a
-      >
+        >Our sustainability goals
+        <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i
+      ></a>
     </footer>
 
     <script src="script.js"></script>
